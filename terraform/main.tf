@@ -5,3 +5,10 @@ terraform {
     }
   }
 }
+
+terraform {
+  backend "gcs" {
+    bucket = "gha-lab-bucket"
+    prefix = "./tf-deploy"
+  }
+}

@@ -6,7 +6,9 @@ provider "libvirt" {
 resource "libvirt_pool" "ubuntu" {
   name = "test-vm"
   type = "dir"
-  path = "/tmp/terraform-provider-libvirt-pool-ubuntu"
+  target {
+    path = "/tmp/terraform-provider-libvirt-pool-ubuntu"
+  }
 }
 
 data "template_file" "user_data" {

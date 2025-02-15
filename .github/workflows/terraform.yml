@@ -10,6 +10,12 @@ on:
     paths:
       - 'terraform/**/*'
 
+permissions:
+  contents: read
+
+env:
+  GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
 jobs:
   deploy:
     runs-on: self-hosted
@@ -22,7 +28,7 @@ jobs:
         run: |
           whoami
           id
-          
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -43,6 +49,6 @@ jobs:
         run: terraform plan -input=false
         # working-directory: terraform
 
-      - name: Terraform Apply (Pre-Merge)
-        run: terraform apply -auto-approve -input=false
+      # - name: Terraform Apply (Pre-Merge)
+      #  run: terraform apply -auto-approve -input=false
         # working-directory: terraform
