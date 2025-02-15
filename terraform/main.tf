@@ -5,7 +5,7 @@ terraform {
       version = "~> 2.5"
     }
     libvirt = {
-      source  = "dmacvicar/libvirt"
+      source = "dmacvicar/libvirt"
     }
   }
 }
