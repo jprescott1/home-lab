@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -34,6 +34,6 @@ jobs:
       - name: Terraform Plan (Pre-Merge)
         run: terraform plan -input=false
         # working-directory: terraform
-    
+
       - name: Terraform Apply (Pre-Merge)
         run: terraform apply -auto-approve -input=false
