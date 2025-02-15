@@ -1,3 +1,4 @@
+# initial setup
 provider "libvirt" {
   uri = "qemu:///system"
 }
