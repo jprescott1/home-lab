@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/local"
       version = "~> 2.5"
     }
+    libvirt = {
+      source = "nv6/libvirt"
+      version = "0.7.1"
+    }
   }
 }
 
