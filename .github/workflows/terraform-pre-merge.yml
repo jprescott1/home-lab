@@ -1,12 +1,8 @@
-name: Deploy Locally
+name: 'Terraform Pre-Merge'
 
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'terraform/**/*'
   pull_request:
+    types: [opened, synchronize]
     paths:
       - 'terraform/**/*'
 
@@ -40,6 +36,3 @@ jobs:
 
       - name: Terraform Plan (Pre-Merge)
         run: terraform plan -input=false
-    
-      - name: Terraform Apply (Pre-Merge)
-        run: terraform apply -auto-approve -input=false
