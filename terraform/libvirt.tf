@@ -1,3 +1,3 @@
 resource "libvirt_domain" "default" {
-    name = "test"
+  name = "test"
 }
