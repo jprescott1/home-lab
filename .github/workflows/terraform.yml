@@ -18,6 +18,11 @@ jobs:
         working-directory: terraform
 
     steps:
+      - name: Check user
+        run: |
+          whoami
+          id
+          
       - name: Checkout Repository
         uses: actions/checkout@v4
 
