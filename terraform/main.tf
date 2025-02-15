@@ -10,6 +10,6 @@ terraform {
 provider "local" {}
 
 resource "local_file" "itworks" {
-  filename = "/home/jimmy/itworks.txt"
+  filename = "/home/jimmy/itworksagain.txt"
   content  = "Hello, Terraform!"
 }
