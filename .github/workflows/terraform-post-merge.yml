@@ -1,8 +1,9 @@
-name: 'Terraform Pre-Merge'
+name: 'Terraform Post-Merge'
 
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
     # paths:
     #  - 'terraform/**/*'
 
@@ -11,7 +12,6 @@ permissions:
 
 env:
   GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-  ACTIVE: 'true' # False runs destroy job for now. Fix this later.
 
 jobs:
   deploy:
@@ -40,8 +40,26 @@ jobs:
 
       - name: Terraform Apply (Post-Merge)
         run: terraform apply -auto-approve -input=false
-        if: github.event.pull_request.merged == true && env.ACTIVE == 'true'
+        if: github.event.pull_request.merged == true
+  
+  destroy:
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: terraform
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Terraform Destroy (Post-Merge)
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
         run: terraform destroy -auto-approve -input=false
-        if: github.event.pull_request.merged == true && env.ACTIVE == 'false'
+  
