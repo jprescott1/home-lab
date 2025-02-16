@@ -11,7 +11,7 @@ permissions:
 
 env:
   GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-  ACTIVE: 'false' # False runs destroy job for now. Fix this later.
+  ACTIVE: 'true' # False runs destroy job for now. Fix this later.
 
 jobs:
   deploy:
