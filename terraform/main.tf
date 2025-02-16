@@ -5,7 +5,7 @@ terraform {
   }
 }
 
-module "libvirt_vm" {
+module "worker_node" {
   source   = "github.com/jprescott1/terraform-libvirt-module"
   vm_name  = "worker-node"
   vm_count = 3
@@ -13,7 +13,7 @@ module "libvirt_vm" {
   vcpu     = 2
 }
 
-module "libvirt_vm" {
+module "control_plane" {
   source   = "github.com/jprescott1/terraform-libvirt-module"
   vm_name  = "control-plane"
   vm_count = 1
