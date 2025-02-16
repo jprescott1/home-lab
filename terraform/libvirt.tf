@@ -7,7 +7,7 @@ resource "libvirt_pool" "ubuntu" {
   name = "test-vm"
   type = "dir"
   target {
-    path = "/tmp/terraform-provider-libvirt-pool-ubuntu"
+    path = "/var/lib/libvirt/images"
   }
 }
 
