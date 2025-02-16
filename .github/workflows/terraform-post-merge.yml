@@ -3,15 +3,15 @@ name: 'Terraform Pre-Merge'
 on:
   pull_request:
     types: [closed]
-    paths:
-      - 'terraform/**/*'
+    # paths:
+    #  - 'terraform/**/*'
 
 permissions:
   contents: read
 
 env:
   GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-  ACTIVE: 'true'
+  ACTIVE: 'false' # False runs destroy job for now. Fix this later.
 
 jobs:
   deploy:
