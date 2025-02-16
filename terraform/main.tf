@@ -10,5 +10,5 @@ module "libvirt_vm" {
   vm_name  = "ubuntu-vm"
   vm_count = 1
   memory   = 1024
-  vcpu     = 2
+  vcpu     = 1
 }
