@@ -11,5 +11,4 @@ module "control_plane" {
   vm_count  = 1
   memory    = 4096
   vcpu      = 2
-  pool_name = libvirt_pool.ubuntu.name
 }
