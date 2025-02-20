@@ -19,7 +19,6 @@ module "vm" {
   vm_count           = 1
   memory             = "2048"
   vcpu               = 1
-  pool               = "terra_pool"
   system_volume      = 20
   dhcp               = true
   local_admin        = "local-admin"
