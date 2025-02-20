@@ -38,7 +38,6 @@ module "vm" {
   dhcp               = true
   local_admin        = "local-admin"
   ssh_admin          = "ci-user"
-  ssh_private_key    = "~/.ssh/id_ed25519"
   local_admin_passwd = "$6$rounds=4096$XB9Gy/7WNzwW6MgO$b/WqUk9vcs/sblEz4jJ2omW6/rmaX9oausQfVozVnnCHyrXFTnRYS7gmq5emWFreZ1Ddqeq.qqK83z88pbs9C1"
   ssh_keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAsycFZCGi6778LPkAq2I9RJlmkNrMwEEiZvGwWp5tvg jimmyjorts@gloogleegloo.com",
