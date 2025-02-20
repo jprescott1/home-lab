@@ -7,6 +7,13 @@ terraform {
   }
 }
 
+terraform {
+  backend "gcs" {
+    bucket = "gha-lab-bucket"
+    prefix = "./lab-deploy"
+  }
+}
+
 provider "libvirt" {
   uri = "qemu:///system"
 }
