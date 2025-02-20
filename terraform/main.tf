@@ -18,22 +18,7 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-# resource "libvirt_pool" "vmpool" {
-#   name = "debug-pool"
-#   type = "dir"
-#   target {
-#     path = "${path.module}/volume"
-#   }
-# }
-
-# resource "libvirt_volume" "vm-qcow2" {
-#   name   = "guest.qcow2"
-#   pool   = libvirt_pool.vmpool.name
-#   source = "${path.module}/sources/guest.qcow2"
-#   format = "qcow2"
-# }
-
-module "vm1" {
+module "control-plane" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
 
@@ -52,7 +37,7 @@ module "vm1" {
   os_img_url = "file:///home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
 }
 
-module "vm2" {
+module "worker-node" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
 
@@ -63,7 +48,7 @@ module "vm2" {
   system_volume      = 20
   dhcp               = true
   ssh_admin          = "jimmy"
-  ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
+  # ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
   ssh_keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
   ]
