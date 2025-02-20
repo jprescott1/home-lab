@@ -11,6 +11,29 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
+output "path_debug" {
+  value = "${path.module}/sources/guest.qcow2"
+}
+
+output "path_debug2" {
+  value = "${path.module}/guest.qcow2"
+}
+
+resource "libvirt_pool" "vmpool" {
+  name = "cloud-pool"
+  type = "dir"
+  target {
+    path = "${path.module}/volume"
+  }
+}
+
+resource "libvirt_volume" "vm-qcow2" {
+  name   = "guest.qcow2"
+  pool   = libvirt_pool.vmpool.name
+  source = "${path.module}/sources/guest.qcow2"
+  format = "qcow2"
+}
+
 module "vm" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
