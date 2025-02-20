@@ -1,42 +1,38 @@
 terraform {
   required_version = ">= 0.13"
-  required_providers {
-    libvirt = {
-      source = "dmacvicar/libvirt"
+    required_providers {
+      libvirt = {
+        source  = "dmacvicar/libvirt"
+      }
     }
-  }
-}
-
-terraform {
-  backend "gcs" {
-    bucket = "gha-lab-bucket"
-    prefix = "./tf-deploy"
-  }
 }
 
 provider "libvirt" {
   uri = "qemu:///system"
 }
 
-module "test_nodes" {
-  source             = "MonolithProjects/vm/libvirt"
-  vm_hostname_prefix = "test"
-  autostart          = false
-  vm_count           = 1
-  index_start        = 1
-  memory             = "512"
-  vcpu               = 1
-  system_volume      = 20
-  graphics           = "vnc"
-  ssh_admin          = "admin"
-  ssh_private_key    = "~/.ssh/id_ed25519"
-  ssh_keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILIJ2/7bvjNBsr/VGNJTbgx9UPyCPjwxf8Ie8d30a4+l jimmy@lab-host",
-  ]
-  local_admin        = "localadmin"
-  local_admin_passwd = "<yout password hash (mkpasswd --method=SHA-512 --rounds=4096)>"
+module "vm" {
+  source  = "MonolithProjects/vm/libvirt"
+  version = "1.12.0"
+
+  vm_hostname_prefix = "server"
+  vm_count    = 1
+  memory      = "2048"
+  vcpu        = 1
+  pool        = "terra_pool"
+  system_volume = 20
+  dhcp        = true
+  local_admin = "local-admin"
+  ssh_admin   = "ci-user"
+  ssh_private_key = "~/.ssh/id_ed25519"
+  local_admin_passwd = "$6$rounds=4096$XB9Gy/7WNzwW6MgO$b/WqUk9vcs/sblEz4jJ2omW6/rmaX9oausQfVozVnnCHyrXFTnRYS7gmq5emWFreZ1Ddqeq.qqK83z88pbs9C1"
+  ssh_keys    = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAsycFZCGi6778LPkAq2I9RJlmkNrMwEEiZvGwWp5tvg jimmyjorts@gloogleegloo.com",
+    ]
+  time_zone   = "CET"
+  os_img_url  = "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img"
 }
 
-output "output_data" {
-  value = module.test_nodes
+output "ip_addresses" {
+  value = module.nodes
 }
