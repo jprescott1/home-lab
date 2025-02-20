@@ -11,14 +11,6 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-output "path_debug" {
-  value = "${path.module}/sources/guest.qcow2"
-}
-
-output "path_debug2" {
-  value = "${path.module}/guest.qcow2"
-}
-
 resource "libvirt_pool" "vmpool" {
   name = "debug-pool"
   type = "dir"
