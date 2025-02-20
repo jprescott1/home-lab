@@ -14,7 +14,9 @@ provider "libvirt" {
 resource "libvirt_pool" "vmpool" {
   name = "cloud-pool"
   type = "dir"
-  path = "${path.module}/volume"
+  target {
+    path = "${path.module}/volume"
+  }
 }
 
 resource "libvirt_volume" "vm-qcow2" {
