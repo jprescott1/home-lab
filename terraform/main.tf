@@ -33,7 +33,7 @@ provider "libvirt" {
 #   format = "qcow2"
 # }
 
-module "vm" {
+module "vm1" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
 
@@ -52,7 +52,7 @@ module "vm" {
   os_img_url = "file:///home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
 }
 
-module "vm" {
+module "vm2" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
 
