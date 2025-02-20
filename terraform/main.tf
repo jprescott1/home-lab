@@ -20,7 +20,7 @@ output "path_debug2" {
 }
 
 resource "libvirt_pool" "vmpool" {
-  name = "cloud-pool"
+  name = "debug-pool"
   type = "dir"
   target {
     path = "${path.module}/volume"
