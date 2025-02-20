@@ -43,9 +43,6 @@ module "vm" {
   vcpu               = 1
   system_volume      = 20
   dhcp               = true
-  local_admin        = "local-admin"
-  ssh_admin          = "ci-user"
-  local_admin_passwd = "$6$rounds=4096$XB9Gy/7WNzwW6MgO$b/WqUk9vcs/sblEz4jJ2omW6/rmaX9oausQfVozVnnCHyrXFTnRYS7gmq5emWFreZ1Ddqeq.qqK83z88pbs9C1"
   ssh_keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
   ]
