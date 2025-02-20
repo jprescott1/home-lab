@@ -47,7 +47,7 @@ module "vm" {
   ssh_admin          = "ci-user"
   local_admin_passwd = "$6$rounds=4096$XB9Gy/7WNzwW6MgO$b/WqUk9vcs/sblEz4jJ2omW6/rmaX9oausQfVozVnnCHyrXFTnRYS7gmq5emWFreZ1Ddqeq.qqK83z88pbs9C1"
   ssh_keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAsycFZCGi6778LPkAq2I9RJlmkNrMwEEiZvGwWp5tvg jimmyjorts@gloogleegloo.com",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
   ]
   time_zone  = "CET"
   os_img_url = "file:///home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
