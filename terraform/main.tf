@@ -43,8 +43,8 @@ module "vm" {
   vcpu               = 1
   system_volume      = 20
   dhcp               = true
-  ssh_admin = "jimmy"
-  ssh_private_key = "/home/jimmy/.ssh/id_ed25519"
+  ssh_admin          = "jimmy"
+  ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
   ssh_keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
   ]
