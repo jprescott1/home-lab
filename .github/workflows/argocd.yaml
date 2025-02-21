@@ -21,15 +21,7 @@ jobs:
         uses: actions/checkout@v4
     
       - name: Create app-of-apps
-        run: |
-         argocd app create argocd-app-of-apps \
-          --dest-namespace argocd \
-          --dest-server https://kubernetes.default.svc \
-          --repo https://github.com/jprescott1/home-lab.git \
-          --path argocd \
-          --project default \
-          --server 127.0.0.1:8080 \
-          --insecure
+        run: argocd app create argocd-app-of-apps --dest-namespace argocd --dest-server https://kubernetes.default.svc --repo https://github.com/jprescott1/home-lab.git --path argocd --project default --server 127.0.0.1:8080 --insecure
 
       - name: Sync app-of-apps
         run: argocd app sync apps
