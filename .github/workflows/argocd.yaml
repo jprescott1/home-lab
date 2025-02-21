@@ -22,7 +22,7 @@ jobs:
     
       - name: Create app-of-apps
         run: |
-          argocd app create apps --dest-namespace argocd 
+          argocd app create apps --dest-namespace argocd \
              --dest-server https://kubernetes.default.svc \
              --repo git@github.com:jprescott1/home-lab.git \
              --server http://127.0.0.1:8080 \
