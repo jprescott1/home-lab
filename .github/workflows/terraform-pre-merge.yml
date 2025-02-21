@@ -3,8 +3,8 @@ name: 'Terraform Pre-Merge'
 on:
   pull_request:
     types: [opened, synchronize]
-    # paths:
-    #  - 'terraform/**/*'
+    paths:
+      - 'terraform/**'
 
 permissions:
   contents: read
