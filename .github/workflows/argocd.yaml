@@ -25,6 +25,7 @@ jobs:
              --dest-namespace argocd \
              --dest-server https://kubernetes.default.svc \
              --repo git@github.com:jprescott1/home-lab.git \
+             --server http://127.0.0.1:8080 \
              --path argocd
 
       - name: Sync app-of-apps
