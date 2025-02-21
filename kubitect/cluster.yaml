@@ -1,0 +1,46 @@
+hosts:
+  - name: localhost
+    connection:
+      type: local
+
+cluster:
+  name: k8s-cluster
+  network:
+    mode: bridge
+    cidr: 192.168.50.0/24
+    bridge: br0
+  nodeTemplate:
+    user: k8s
+    updateOnBoot: true
+    ssh:
+      addToKnownHosts: true
+      privateKeyPath: /home/jimmy/.ssh/id_ed25519
+    os:
+      distro: ubuntu22
+  nodes:
+    master:
+      default:
+        ram: 6
+        cpu: 6
+        mainDiskSize: 20
+      instances:
+        - id: 1
+          ip: 192.168.50.232
+    worker:
+      default:
+        ram: 6
+        cpu: 6
+        mainDiskSize: 20
+      instances:
+        - id: 1
+          ip: 192.168.50.233
+        - id: 2
+          ip: 192.168.50.234
+        - id: 3
+          ip: 192.168.50.235
+
+kubernetes:
+  version: v1.30.4
+  networkPlugin: cilium
+  other:
+    mergeKubeconfig: true
