@@ -11,7 +11,8 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    repoURL: https://charts.jetstack.io
+    repoURL: https://github.com/cert-manager/cert-manager.git
     targetRevision: HEAD
     alias: cert-manager
+    path: deploy/charts/cert-manager
     condition: cert-manager.enabled
