@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: security
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    repoURL: https://charts.jetstack.io
+    targetRevision: HEAD
+    alias: cert-manager
+    condition: cert-manager.enabled
