@@ -2,6 +2,9 @@ hosts:
   - name: localhost
     connection:
       type: local
+    dataResourcePools:
+      - name: k8s
+        path: /mnt/data
 
 cluster:
   name: k8s-cluster
@@ -22,7 +25,7 @@ cluster:
       default:
         ram: 6
         cpu: 6
-        mainDiskSize: 20
+        mainDiskSize: 40
       instances:
         - id: 1
           ip: 192.168.50.232
@@ -30,13 +33,25 @@ cluster:
       default:
         ram: 6
         cpu: 6
-        mainDiskSize: 20
+        mainDiskSize: 30
       instances:
         - id: 1
+          dataDisks:
+            - name: data-volume
+              pool: k8s
+              size: 50
           ip: 192.168.50.233
         - id: 2
+          dataDisks:
+            - name: data-volume
+              pool: k8s
+              size: 50
           ip: 192.168.50.234
         - id: 3
+          dataDisks:
+            - name: data-volume
+              pool: k8s
+              size: 50
           ip: 192.168.50.235
 
 kubernetes:
