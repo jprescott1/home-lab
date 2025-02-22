@@ -20,4 +20,4 @@ jobs:
         run: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
       - name: Deploy ArgoCD App-of-Apps
-        run: helm upgrade --install argocd-apps ./argocd -f argocd/values.yaml -n argocd --create-namespace
+        run: helm upgrade --kube-apiserver "https://192.168.50.232:6443" --install argocd-apps ./argocd -f argocd/values.yaml -n argocd --create-namespace
