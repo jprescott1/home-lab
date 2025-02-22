@@ -2,7 +2,7 @@ name: Deploy ArgoCD App-of-Apps
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [closed]
     paths:
       - 'argocd/**'
 
