@@ -1,7 +1,7 @@
 spec:
   destination:
     namespace: argocd
-    server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc # test
   source:
     repoURL: https://github.com/jprescott1/home-lab.git
     targetRevision: HEAD
