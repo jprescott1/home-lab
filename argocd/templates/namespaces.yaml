@@ -29,6 +29,6 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: security
+  name: cert-manager
   annotations:
     argocd.argoproj.io/sync-wave: "-1"

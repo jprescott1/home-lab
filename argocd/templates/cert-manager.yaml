@@ -15,4 +15,4 @@ spec:
       releaseName: cert-manager
   destination:
     server: {{ .Values.spec.destination.server }}
-    namespace: security
+    namespace: cert-manager
