@@ -18,8 +18,5 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > kubeconfig
           export KUBECONFIG=$PWD/kubeconfig
 
-      - name: Install Helm
-        run: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
       - name: Deploy ArgoCD App-of-Apps
         run: helm upgrade --install argocd-apps ./argocd -f argocd/values.yaml -n argocd --create-namespace
