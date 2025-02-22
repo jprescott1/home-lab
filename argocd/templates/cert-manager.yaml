@@ -6,13 +6,13 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  destination:
-    namespace: security
-    server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    repoURL: https://github.com/cert-manager/cert-manager.git
-    targetRevision: HEAD
-    alias: cert-manager
-    path: deploy/charts/cert-manager
-    condition: cert-manager.enabled
+    chart: cert-manager
+    repoURL: https://charts.jetstack.io
+    targetRevision: v1.17.0
+    helm:
+      releaseName: cert-manager
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: security
