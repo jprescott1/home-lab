@@ -13,6 +13,8 @@ spec:
     targetRevision: v1.17.0
     helm:
       releaseName: cert-manager
+      values: |
+        installCRDs: true
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: cert-manager
