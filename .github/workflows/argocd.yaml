@@ -7,11 +7,19 @@ on:
       - 'argocd/**'
 
 jobs:
+  lint:
+    name: Yamllint
+
   deploy:
     runs-on: self-hosted
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      
+      - name: yamllint
+        uses: ansible-actions/yamllint-action@v0.0.2
+        with:
+          target: "./argocd/**"
 
       - name: Set up Kubeconfig
         run: |
