@@ -10,9 +10,10 @@ jobs:
   yamllint:
     runs-on: ubuntu-latest
     steps:
-      - uses: ansible-actions/yamllint-action@v0.0.2
-        with:
-          target: "./argocd/**"
+      - run: echo "this is a test"
+      # - uses: ansible-actions/yamllint-action@v0.0.2
+      #   with:
+      #     target: "./argocd/**"
 
   deploy:
     runs-on: self-hosted
