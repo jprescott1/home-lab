@@ -6,7 +6,7 @@ on:
     paths:
       - 'argocd/**'
 
-# jobs:
+jobs:
 #   lint:
 #     name: Yamllint
 
