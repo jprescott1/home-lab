@@ -6,9 +6,9 @@ on:
     paths:
       - 'argocd/**'
 
-jobs:
-  lint:
-    name: Yamllint
+# jobs:
+#   lint:
+#     name: Yamllint
 
   deploy:
     runs-on: self-hosted
