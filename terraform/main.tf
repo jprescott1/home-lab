@@ -39,7 +39,7 @@ module "vm1" {
 
   vm_hostname_prefix = "control-plane"
   vm_count           = 3
-  memory             = "4000"
+  memory             = "2049"
   vcpu               = 4
   system_volume      = 100
   dhcp               = true
@@ -58,7 +58,7 @@ module "vm2" {
 
   vm_hostname_prefix = "worker-node"
   vm_count           = 5
-  memory             = "4096"
+  memory             = "3024"
   vcpu               = 4
   system_volume      = 20
   dhcp               = true
