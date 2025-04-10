@@ -58,7 +58,7 @@ module "vm2" {
 
   vm_hostname_prefix = "worker-node"
   vm_count           = 5
-  memory             = "3000"
+  memory             = "4096"
   vcpu               = 4
   system_volume      = 20
   dhcp               = true
