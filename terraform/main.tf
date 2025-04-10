@@ -38,10 +38,10 @@ module "vm1" {
   version = "1.12.0"
 
   vm_hostname_prefix = "control-plane"
-  vm_count           = 3
+  vm_count           = 1
   memory             = "4000"
-  vcpu               = 2
-  system_volume      = 20
+  vcpu               = 4
+  system_volume      = 100
   dhcp               = true
   ssh_admin          = "jimmy"
   ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
@@ -58,8 +58,8 @@ module "vm2" {
 
   vm_hostname_prefix = "worker-node"
   vm_count           = 5
-  memory             = "2000"
-  vcpu               = 2
+  memory             = "4096"
+  vcpu               = 4
   system_volume      = 20
   dhcp               = true
   ssh_admin          = "jimmy"
