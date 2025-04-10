@@ -38,7 +38,7 @@ module "vm1" {
   version = "1.12.0"
 
   vm_hostname_prefix = "control-plane"
-  vm_count           = 1
+  vm_count           = 3
   memory             = "4000"
   vcpu               = 4
   system_volume      = 100
