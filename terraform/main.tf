@@ -39,7 +39,7 @@ module "vm1" {
 
   vm_hostname_prefix = "control-plane"
   vm_count           = 1
-  memory             = "4000"
+  memory             = "4096"
   vcpu               = 4
   system_volume      = 100
   dhcp               = true
