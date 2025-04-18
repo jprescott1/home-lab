@@ -57,7 +57,7 @@ module "vm2" {
   version = "1.12.0"
 
   vm_hostname_prefix = "worker-node"
-  vm_count           = 5
+  vm_count           = 0
   memory             = "3024"
   vcpu               = 4
   system_volume      = 20
