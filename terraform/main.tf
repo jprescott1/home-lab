@@ -1,10 +1,14 @@
 terraform {
-  required_version = ">= 0.13"
   required_providers {
     libvirt = {
-      source = "dmacvicar/libvirt"
+      source  = "dmacvicar/libvirt"
+      version = "~> 0.7.6"
     }
   }
+}
+
+provider "libvirt" {
+  uri = "qemu:///system"
 }
 
 terraform {
@@ -14,75 +18,56 @@ terraform {
   }
 }
 
-provider "libvirt" {
-  uri = "qemu:///system"
+resource "libvirt_domain" "control_plane" {
+  name   = "control-plane01"
+  memory = "4096"
+  vcpu   = 4
+  disk {
+    volume_id = libvirt_volume.control_plane_root.id
+  }
+  network_interface {
+    bridge = "br0"
+  }
+  cloudinit = libvirt_cloudinit.control_plane_cloudinit.id
 }
 
-# resource "libvirt_pool" "vmpool" {
-#   name = "debug-pool"
-#   type = "dir"
-#   target {
-#     path = "${path.module}/volume"
-#   }
-# }
-
-# resource "libvirt_volume" "vm-qcow2" {
-#   name   = "guest.qcow2"
-#   pool   = libvirt_pool.vmpool.name
-#   source = "${path.module}/sources/guest.qcow2"
-#   format = "qcow2"
-# }
-
-module "vm1" {
-  source  = "MonolithProjects/vm/libvirt"
-  version = "1.12.0"
-
-  vm_hostname_prefix = "control-plane"
-  vm_count           = 1
-  memory             = "4096"
-  vcpu               = 4
-  system_volume      = 100
-  dhcp               = false
-  bridge          = "br0"
-  runcmd = [
-    "[ systemctl, daemon-reload ]",
-    "[ systemctl, enable, qemu-guest-agent ]",
-    "[ systemctl, start, qemu-guest-agent ]",
-    "[ systemctl, restart, systemd-networkd ]",
-    "echo 'Setting static IP address'",
-    "[ ip, addr, flush, dev, ens3 ]",
-    "[ ip, addr, add, 192.168.10.54/24, dev, ens3 ]",
-    "[ ip, link, set, dev, ens3, up ]",
-    "echo 'Setting default gateway'",
-    "[ ip, route, add, default, via, 192.168.10.1 ]",
-    "echo 'Setting DNS servers'",
-    "[ echo, 'nameserver 8.8.8.8', '>>', '/etc/resolv.conf' ]",
-    "[ echo, 'nameserver 8.8.4.4', '>>', '/etc/resolv.conf' ]",
-  ]
-  ssh_admin       = "jimmy"
-  ssh_private_key = "/home/jimmy/.ssh/id_ed25519"
-  ssh_keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
-  ]
-  time_zone  = "UTC"
-  os_img_url = "file:///home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
+resource "libvirt_volume" "control_plane_root" {
+  name   = "control-plane01-root"
+  pool   = "default"
+  size   = 100 * 1024 * 1024 * 1024 # 100 GB
+  format = "qcow2"
+  source = "/home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
 }
 
-module "vm2" {
-  source  = "MonolithProjects/vm/libvirt"
-  version = "1.12.0"
-
-  vm_hostname_prefix = "worker-node"
-  vm_count           = 0
-  memory             = "4096"
-  vcpu               = 4
-  system_volume      = 20
-  dhcp               = true
-  ssh_admin          = "jimmy"
-  ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
-  ssh_keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
-  ]
-  time_zone  = "UTC"
-  os_img_url = "file:///home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
+resource "libvirt_cloudinit" "control_plane_cloudinit" {
+  name      = "control-plane01-cloudinit"
+  user_data = <<-EOF
+#cloud-config
+hostname: control-plane01
+users:
+  - name: jimmy
+    groups: sudo
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab
+password: your_secure_password # Consider using ssh keys instead
+chpasswd:
+  list: |
+    jimmy:$6$rounds=656000$your_salt$hashed_password
+    root:$6$rounds=656000$another_salt$another_hashed_password
+  expire: False
+network:
+  version: 2
+  ethernets:
+    ens3:
+      dhcp4: false
+      addresses:
+        - 192.168.10.54/24
+      gateway4: 192.168.10.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+runcmd:
+  - [ systemctl, enable, --now, qemu-guest-agent.service ]
+EOF
 }
