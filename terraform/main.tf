@@ -38,17 +38,27 @@ module "vm1" {
   version = "1.12.0"
 
   vm_hostname_prefix = "control-plane"
-  vm_count           = 0
+  vm_count           = 1
   memory             = "4096"
   vcpu               = 4
   system_volume      = 100
   dhcp               = false
-  ip_address = [
-    "192.168.100.10"
-  ]
-  ip_gateway      = "192.168.10.1"
   bridge          = "br0"
-  ip_nameserver   = "8.8.8.8"
+  runcmd = [
+    "[ systemctl, daemon-reload ]",
+    "[ systemctl, enable, qemu-guest-agent ]",
+    "[ systemctl, start, qemu-guest-agent ]",
+    "[ systemctl, restart, systemd-networkd ]",
+    "echo 'Setting static IP address'",
+    "[ ip, addr, flush, dev, ens3 ]",
+    "[ ip, addr, add, 192.168.10.54/24, dev, ens3 ]",
+    "[ ip, link, set, dev, ens3, up ]",
+    "echo 'Setting default gateway'",
+    "[ ip, route, add, default, via, 192.168.10.1 ]",
+    "echo 'Setting DNS servers'",
+    "[ echo, 'nameserver 8.8.8.8', '>>', '/etc/resolv.conf' ]",
+    "[ echo, 'nameserver 8.8.4.4', '>>', '/etc/resolv.conf' ]",
+  ]
   ssh_admin       = "jimmy"
   ssh_private_key = "/home/jimmy/.ssh/id_ed25519"
   ssh_keys = [
