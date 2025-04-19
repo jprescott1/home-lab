@@ -42,9 +42,12 @@ module "vm1" {
   memory             = "4096"
   vcpu               = 4
   system_volume      = 100
-  dhcp               = true
-  ssh_admin          = "jimmy"
-  ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
+  dhcp               = false
+  ip_address = [
+    "192.168.10.54"
+  ]
+  ssh_admin       = "jimmy"
+  ssh_private_key = "/home/jimmy/.ssh/id_ed25519"
   ssh_keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
   ]
@@ -61,9 +64,15 @@ module "vm2" {
   memory             = "4096"
   vcpu               = 4
   system_volume      = 20
-  dhcp               = true
-  ssh_admin          = "jimmy"
-  ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
+  dhcp               = false
+  ip_address = [
+    "192.168.10.50",
+    "192.168.10.51",
+    "192.168.10.52",
+    "192.168.10.53"
+  ]
+  ssh_admin       = "jimmy"
+  ssh_private_key = "/home/jimmy/.ssh/id_ed25519"
   ssh_keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab",
   ]
