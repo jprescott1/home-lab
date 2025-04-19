@@ -47,6 +47,7 @@ module "vm1" {
     "192.168.100.10"
   ]
   ip_gateway      = "192.168.10.1"
+  bridge          = "br0"
   ip_nameserver   = "8.8.8.8"
   ssh_admin       = "jimmy"
   ssh_private_key = "/home/jimmy/.ssh/id_ed25519"
