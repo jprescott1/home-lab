@@ -18,12 +18,19 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-resource "libvirt_pool" "k8s_pool" {
-  name = "k8s_pool"
+resource "libvirt_pool" "ubuntu_2404_server" {
+  name = "ubuntu_pool"
   type = "dir"
   target {
     path = "/home/jimmy/pools"
   }
+}
+
+resource "libvirt_volume" "ubuntu_2404_server" {
+  name   = "ubuntu_pool"
+  pool   = libvirt_pool.ubuntu_2404_server.name
+  source = "/home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
+  format = "qcow2"
 }
 
 module "vm1" {
