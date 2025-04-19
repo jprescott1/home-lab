@@ -18,6 +18,14 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
+resource "libvirt_pool" "k8s_pool" {
+  name = "k8s_pool"
+  type = "dir"
+  target {
+    path = "/home/jimmy/pools"
+  }
+}
+
 module "vm1" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
