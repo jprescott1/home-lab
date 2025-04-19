@@ -42,11 +42,19 @@ module "vm2" {
   version = "1.12.0"
 
   vm_hostname_prefix = "worker-node"
-  vm_count           = 0
+  vm_count           = 1
   memory             = "4096"
   vcpu               = 4
-  system_volume      = 20
-  dhcp               = true
+  pool               = "k8s_pool"
+  system_volume      = 50
+  dhcp               = false
+  ip_address = [
+    "192.168.10.100"
+  ]
+  ip_gateway         = "192.168.10.1"
+  ip_nameserver      = "8.8.8.8"
+  local_admin        = "admin"
+  local_admin_passwd = "$6$rounds=4096$OdjRRHAa7p4ISvF0$7yLgil3eb4oNiIjJb34SQd0BZOL8uF94xUCw3nb2Z2FtNzSbYp/cIOx7WEMj3b5vqpsoByuE6.OfRvBUh8KlH0"
   ssh_admin          = "jimmy"
   ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
   ssh_keys = [
@@ -54,4 +62,5 @@ module "vm2" {
   ]
   time_zone  = "UTC"
   os_img_url = "file:///home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
+
 }
