@@ -28,19 +28,6 @@ resource "libvirt_domain" "control_plane" {
   network_interface {
     bridge = "br0"
   }
-  cloudinit = libvirt_cloudinit.control_plane_cloudinit.id
-}
-
-resource "libvirt_volume" "control_plane_root" {
-  name   = "control-plane01-root"
-  pool   = "default"
-  size   = 100 * 1024 * 1024 * 1024 # 100 GB
-  format = "qcow2"
-  source = "/home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
-}
-
-resource "libvirt_cloudinit" "control_plane_cloudinit" {
-  name      = "control-plane01-cloudinit"
   user_data = <<-EOF
 #cloud-config
 hostname: control-plane01
@@ -49,12 +36,6 @@ users:
     groups: sudo
     ssh-authorized-keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqCNHKusEfJmWp7PQcGhgFWBWAq3RBKn9dXoZJMO+Ri jimmy@dev-lab
-password: your_secure_password # Consider using ssh keys instead
-chpasswd:
-  list: |
-    jimmy:$6$rounds=656000$your_salt$hashed_password
-    root:$6$rounds=656000$another_salt$another_hashed_password
-  expire: False
 network:
   version: 2
   ethernets:
@@ -70,4 +51,12 @@ network:
 runcmd:
   - [ systemctl, enable, --now, qemu-guest-agent.service ]
 EOF
+}
+
+resource "libvirt_volume" "control_plane_root" {
+  name   = "control-plane01-root"
+  pool   = "default"
+  size   = 100 * 1024 * 1024 * 1024
+  format = "qcow2"
+  source = "/home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
 }
