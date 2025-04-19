@@ -18,27 +18,12 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-# resource "libvirt_pool" "vmpool" {
-#   name = "debug-pool"
-#   type = "dir"
-#   target {
-#     path = "${path.module}/volume"
-#   }
-# }
-
-# resource "libvirt_volume" "vm-qcow2" {
-#   name   = "guest.qcow2"
-#   pool   = libvirt_pool.vmpool.name
-#   source = "${path.module}/sources/guest.qcow2"
-#   format = "qcow2"
-# }
-
 module "vm1" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
 
   vm_hostname_prefix = "control-plane"
-  vm_count           = 1
+  vm_count           = 0
   memory             = "4096"
   vcpu               = 4
   system_volume      = 100
@@ -57,7 +42,7 @@ module "vm2" {
   version = "1.12.0"
 
   vm_hostname_prefix = "worker-node"
-  vm_count           = 5
+  vm_count           = 0
   memory             = "4096"
   vcpu               = 4
   system_volume      = 20
