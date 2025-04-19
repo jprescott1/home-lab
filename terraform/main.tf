@@ -18,27 +18,27 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-# resource "libvirt_pool" "vmpool" {
-#   name = "debug-pool"
-#   type = "dir"
-#   target {
-#     path = "${path.module}/volume"
-#   }
-# }
+resource "libvirt_pool" "ubuntu_2404_server" {
+  name = "ubuntu_pool"
+  type = "dir"
+  target {
+    path = "/home/jimmy/pools"
+  }
+}
 
-# resource "libvirt_volume" "vm-qcow2" {
-#   name   = "guest.qcow2"
-#   pool   = libvirt_pool.vmpool.name
-#   source = "${path.module}/sources/guest.qcow2"
-#   format = "qcow2"
-# }
+resource "libvirt_volume" "ubuntu_2404_server" {
+  name   = "ubuntu_pool"
+  pool   = libvirt_pool.ubuntu_2404_server.name
+  source = "/home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
+  format = "qcow2"
+}
 
 module "vm1" {
   source  = "MonolithProjects/vm/libvirt"
   version = "1.12.0"
 
   vm_hostname_prefix = "control-plane"
-  vm_count           = 1
+  vm_count           = 0
   memory             = "4096"
   vcpu               = 4
   system_volume      = 100
@@ -57,11 +57,19 @@ module "vm2" {
   version = "1.12.0"
 
   vm_hostname_prefix = "worker-node"
-  vm_count           = 5
+  vm_count           = 1
   memory             = "4096"
   vcpu               = 4
-  system_volume      = 20
-  dhcp               = true
+  pool               = "k8s_pool"
+  system_volume      = 50
+  dhcp               = false
+  ip_address = [
+    "192.168.10.100"
+  ]
+  ip_gateway         = "192.168.10.1"
+  ip_nameserver      = "8.8.8.8"
+  local_admin        = "admin"
+  local_admin_passwd = "$6$rounds=4096$OdjRRHAa7p4ISvF0$7yLgil3eb4oNiIjJb34SQd0BZOL8uF94xUCw3nb2Z2FtNzSbYp/cIOx7WEMj3b5vqpsoByuE6.OfRvBUh8KlH0"
   ssh_admin          = "jimmy"
   ssh_private_key    = "/home/jimmy/.ssh/id_ed25519"
   ssh_keys = [
@@ -69,4 +77,5 @@ module "vm2" {
   ]
   time_zone  = "UTC"
   os_img_url = "file:///home/jimmy/images/ubuntu-22.04-server-cloudimg-amd64.img"
+
 }
